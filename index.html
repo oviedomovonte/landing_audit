@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AuditBuddy — Audit your Jira Cloud instance in minutes</title>
+<meta name="description" content="Connect to any Jira Cloud instance and pull projects, workflows, schemes, users, custom fields and more into one place. Explore, ask the AI assistant, and export to CSV.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a href="#top" class="nav-logo" aria-label="AuditBuddy home"><img src="assets/auditbuddy.png" alt="AuditBuddy" width="179" height="29"></a>
+    <div class="nav-links">
+      <a href="#extracts">What it extracts</a>
+      <a href="#how">How it works</a>
+      <a href="#security">Security</a>
+    </div>
+    <a href="https://audit.movonte.com" target="_blank" rel="noopener" class="nav-cta">Open AuditBuddy</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero" aria-labelledby="hero-h">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-h" class="hero-title">Your whole Jira instance. <span>Audited in minutes.</span></h1>
+        <div class="hero-body">
+          <p class="lead">Connect to any Jira Cloud instance and pull projects, workflows, schemes, users, custom fields and more into one place. Explore every category, ask the AI assistant, and export what you need to CSV.</p>
+          <div class="hero-actions">
+            <a href="https://audit.movonte.com" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Start your audit</a>
+            <a href="#how" class="btn btn-ghost">See how it works</a>
+          </div>
+          <div class="hero-facts">
+            <span>Credentials never stored</span>
+            <span class="sep" aria-hidden="true">·</span>
+            <span>Encrypted connections</span>
+            <span class="sep" aria-hidden="true">·</span>
+            <span>CSV export</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow" role="img" aria-label="AuditBuddy pulling data from a Jira Cloud instance">
+        <div class="flow-glow" aria-hidden="true"></div>
+        <div class="flow-source">
+          <span class="flow-icon"><span></span></span>
+          <div class="flow-source-text">
+            <div class="flow-kicker">Jira Cloud</div>
+            <div class="flow-host">your-site.atlassian.net</div>
+          </div>
+          <span class="flow-status"><span class="dot pulse"></span>Connected</span>
+        </div>
+        <div class="flow-line" aria-hidden="true"></div>
+        <div class="flow-panel">
+          <div id="flow-rows"></div>
+          <div class="flow-footer">
+            <span class="flow-summary" id="flow-summary">0 of 5 fetched</span>
+            <span class="flow-export" id="flow-export">Export CSV</span>
+          </div>
+        </div>
+        <div class="flow-line is-coral" aria-hidden="true"></div>
+        <div class="ai-chip">
+          <div class="ai-chip-ring" aria-hidden="true"></div>
+          <div class="ai-chip-inner">
+            <svg class="spark" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M12 0C12.9 6.6 17.4 11.1 24 12C17.4 12.9 12.9 17.4 12 24C11.1 17.4 6.6 12.9 0 12C6.6 11.1 11.1 6.6 12 0Z" fill="#FC5E51"/></svg>
+            <span>Ask the AI assistant about anything you've fetched.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mock-wrap">
+      <div class="mock-glow" aria-hidden="true"></div>
+      <div class="mock" role="img" aria-label="Illustrative AuditBuddy interface showing Jira categories, a data table and the AI assistant">
+        <div class="mock-top">
+          <img src="assets/auditbuddy.png" alt="">
+          <div class="spacer"></div>
+          <div class="mock-host"><span class="dot pulse"></span><span>your-site.atlassian.net</span></div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <div class="mock-side-head">
+              <span class="mock-label">Categories</span>
+              <button type="button" class="fetch-btn" id="fetch-all">Fetch all</button>
+            </div>
+            <div id="cat-list" style="display:contents"></div>
+          </div>
+          <div class="mock-main">
+            <div class="mock-main-head">
+              <div>
+                <div class="mock-title" id="mock-title">Projects</div>
+                <div class="mock-meta" id="mock-meta">Waiting to fetch</div>
+              </div>
+              <span class="mock-export">Export CSV</span>
+            </div>
+            <div class="table is-dim" id="mock-table">
+              <div class="trow thead" id="mock-thead"></div>
+              <div class="loader"><div></div></div>
+              <div id="mock-rows"></div>
+            </div>
+          </div>
+          <div class="mock-ai">
+            <div class="mock-label"><svg class="spark" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><path d="M12 0C12.9 6.6 17.4 11.1 24 12C17.4 12.9 12.9 17.4 12 24C11.1 17.4 6.6 12.9 0 12C6.6 11.1 11.1 6.6 12 0Z" fill="#FC5E51"/></svg>AI assistant</div>
+            <div class="bubble bubble-user">Which workflows are shared by more than one project?</div>
+            <div class="bubble bubble-ai">One: <strong>Software Simplified Workflow</strong>, used by PLAT and MOB.</div>
+            <div class="grow"></div>
+            <div class="mock-input">Ask about your instance…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mock-note">Illustrative interface with sample data. Click a category to explore.</p>
+  </div>
+</section>
+
+<section class="problem" aria-labelledby="problem-h">
+  <div class="container">
+    <div class="eyebrow">The problem</div>
+    <div class="problem-body">
+      <h2 id="problem-h" class="lit-text" aria-label="Jira configuration builds up quietly. Projects, schemes, workflows and fields, layered over years and spread across admin screens made for editing, not auditing.">Jira configuration builds up quietly. Projects, schemes, workflows and fields, layered over years and spread across admin screens made for editing, not auditing.</h2>
+      <p>Every hour spent clicking through settings to piece the picture together is an hour not spent improving it. AuditBuddy collects the configuration into one view you can explore, question and export.</p>
+    </div>
+  </div>
+</section>
+
+<section id="extracts" class="extracts alt" aria-labelledby="ext-h">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 id="ext-h" class="h2-xl">Complete data extraction.</h2>
+      <p>Fetch everything at once, or one category at a time. Each category is ready to browse the moment it lands.</p>
+    </div>
+    <ul class="extract-list" data-reveal>
+      <li><span class="extract-n">01</span><span class="extract-name">Projects</span><span class="extract-note">Every project, key and type</span></li>
+      <li><span class="extract-n">02</span><span class="extract-name">Workflows</span><span class="extract-note">Statuses and where they’re used</span></li>
+      <li><span class="extract-n">03</span><span class="extract-name">Schemes</span><span class="extract-note">Permission, notification, screen and more</span></li>
+      <li><span class="extract-n">04</span><span class="extract-name">Users</span><span class="extract-note">Accounts and groups</span></li>
+      <li><span class="extract-n">05</span><span class="extract-name">Custom fields</span><span class="extract-note">Field types and contexts</span></li>
+      <li><span class="extract-n">06</span><span class="extract-name">Configurations</span><span class="extract-note">and more</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="capabilities" aria-labelledby="cap-h">
+  <div class="container">
+    <h2 id="cap-h" class="sr-only">Capabilities</h2>
+    <div class="feature" data-reveal>
+      <div>
+        <h3>Ask your instance questions in plain language.</h3>
+        <p>Once your data is fetched, the AI assistant helps you make sense of it — so the answer to a question doesn't depend on knowing which screen it hides behind.</p>
+      </div>
+      <div class="card chat">
+        <div class="bubble bubble-user">Summarize the custom fields in this instance.</div>
+        <div class="bubble bubble-ai">The answer is drawn from the data you've fetched in this session.</div>
+        <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <div class="feature" data-reveal>
+      <div class="card csv">
+        <div class="csv-head"><span>custom-fields.csv</span><span class="csv-tag">CSV</span></div>
+        <div class="csv-body">
+          <div>name,type,contexts</div>
+          <div>Story Points,Number,2</div>
+          <div>Customer Tier,Select list,1</div>
+          <div>Release Train,Labels,Global</div>
+          <div>Root Cause,Text field,1</div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">Export to CSV</div>
+        <h3>Take the data wherever the analysis happens.</h3>
+        <p>Download any category as CSV and continue in the spreadsheet, report or review process your team already uses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="how alt" aria-labelledby="how-h">
+  <div class="container">
+    <div class="head" data-reveal>
+      <div class="eyebrow">How it works</div>
+      <h2 id="how-h" class="h2-xl">Three steps. No setup.</h2>
+    </div>
+    <ol class="steps" data-reveal>
+      <li class="step">
+        <span class="step-n">01</span>
+        <h3>Connect your instance</h3>
+        <p>Enter your Jira URL, email and API token. Credentials are used only for this session.</p>
+        <div class="fields">
+          <div class="field"><span>Jira URL</span><span>your-site.atlassian.net</span></div>
+          <div class="field"><span>Email</span><span>you@company.com</span></div>
+          <div class="field is-focus"><span>API token</span><span class="mask">••••••••••</span></div>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-n">02</span>
+        <h3>Fetch your data</h3>
+        <p>Pull projects, workflows, users, schemes and more — all at once or one category at a time.</p>
+        <div class="chips">
+          <span class="chip is-primary">Fetch all</span>
+          <span class="chip">Projects</span>
+          <span class="chip">Workflows</span>
+          <span class="chip">Schemes</span>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-n">03</span>
+        <h3>Audit &amp; export</h3>
+        <p>Explore each category, ask the AI assistant, and export what you need to CSV.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="security" class="security" aria-labelledby="sec-h">
+  <div class="security-card" data-reveal>
+    <div class="security-grid">
+      <div>
+        <div class="eyebrow">Secure connection</div>
+        <h2 id="sec-h">Your credentials are never stored.</h2>
+      </div>
+      <div class="security-list">
+        <div class="security-item"><span>01</span><span>Credentials are used only for the session you're in.</span></div>
+        <div class="security-item"><span>02</span><span>All connections are encrypted.</span></div>
+        <div class="security-item"><span>03</span><span>You authenticate with your own Jira API token.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" aria-labelledby="cta-h">
+  <div class="closing-glow" aria-hidden="true"></div>
+  <div class="closing-inner" data-reveal>
+    <h2 id="cta-h">Stop piecing Jira together <span class="accent">screen by screen.</span></h2>
+    <p class="lead">Connect your instance and see projects, workflows, schemes, users and custom fields side by side — in minutes.</p>
+    <a href="https://audit.movonte.com" target="_blank" rel="noopener" class="btn btn-primary btn-xl">Open AuditBuddy</a>
+    <span class="closing-url">audit.movonte.com</span>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/auditbuddy.png" alt="AuditBuddy" width="179" height="29">
+      <div class="footer-links">
+        <a href="#extracts">What it extracts</a>
+        <a href="#how">How it works</a>
+        <a href="#security">Security</a>
+        <a href="https://audit.movonte.com" target="_blank" rel="noopener">Open the app</a>
+      </div>
+    </div>
+    <div class="attribution">
+      <span>Another product by</span>
+      <img src="assets/movonte.png" alt="Movonte" width="1800" height="458">
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
